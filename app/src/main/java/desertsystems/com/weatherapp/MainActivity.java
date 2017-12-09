@@ -34,7 +34,8 @@ import data.JSONWeatherParser;
 import data.WeatherHttpClient;
 import model.Weather;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+{
 
     private TextView cityName;
     private TextView temp;
@@ -86,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
     public void renderWeatherData( String city ){
 
         WeatherTask weatherTask = new WeatherTask();
-        weatherTask.execute( new String[] { city + "&units=metric" }  );
+        weatherTask.execute( city + "&units=metric" );
         weather.iconData = weather.currentCondition.getIcon();
         new DownloadImageAsynchTask().execute( weather.iconData );
 
@@ -127,8 +128,6 @@ public class MainActivity extends AppCompatActivity {
 
             Log.v( "Data: ", weather.place.getCity() );
 
-
-
             return weather;
         }
     }
@@ -143,12 +142,13 @@ public class MainActivity extends AppCompatActivity {
             iconView.setImageBitmap( bitmap );
         }
 
-        private Bitmap downloadImage( String code ){
+        private Bitmap downloadImage( String code )
+        {
 
-
-            try {
-                final HttpURLConnection connection  = (HttpURLConnection)( new URL( Utils.ICON_URL + code + ".png" + "&APPID=" + Utils.API_KEY )).openConnection();
-                //connection.setRequestMethod( "GET" );
+            try
+            {
+                final HttpURLConnection connection  = (HttpURLConnection)( new URL( Utils.ICON_URL +                code + ".png" + "&APPID=" + Utils.API_KEY )).openConnection();
+                connection.setRequestMethod( "GET" );
                 connection.setDoInput( true );
                 connection.connect();
                 int responseCode = connection.getResponseCode();
@@ -162,13 +162,13 @@ public class MainActivity extends AppCompatActivity {
 
                 connection.disconnect();
                 return null;
-
-
             }
-            catch ( MalformedURLException e ) {
+            catch ( MalformedURLException e )
+            {
                 e.printStackTrace();
             }
-            catch ( IOException e ) {
+            catch ( IOException e )
+            {
                 e.printStackTrace();
             }
             return null;
